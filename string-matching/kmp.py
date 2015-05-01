@@ -27,18 +27,19 @@ def compute_prefix_function(P):
         pi[q] = k
     return pi
 
-def solve_HW10_Problem2():
+def solve_hw10_prob2():
     pattern = 'ababbabbabbababbabb';
     expected = [0, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 4, 5, 6, 7, 8]
     print("pi[1...m] for pattern 'ababbabbabbababbabb' is:")
-    print(compute_prefix_function(pattern), expected)
+    print(compute_prefix_function(pattern))
 
-solve_HW10_Problem2()
+solve_hw10_prob2()
 
 """
 Output:
+
 pi[1...m] for pattern 'ababbabbabbababbabb' is:
-[0, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 4, 5, 6, 7, 8] [0, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+[0, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 4, 5, 6, 7, 8]
 >>> 
-[Finished in 0.0s]
+[Finished in 0.1s]
 """

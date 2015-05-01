@@ -27,7 +27,7 @@ class TestKMP(unittest.TestCase):
         self.assertEqual(compute_prefix_function(self.P4), [0, 1, 2, 0, 1, 2])
         self.assertEqual(compute_prefix_function(self.P5), [0, 1, 2, 0, 1, 2, 3])
 
-    def testComputePrefixFunctionProb2(self):
+    def testComputePrefixFunctionHwProblem(self):
         pattern = 'ababbabbabbababbabb';
         expected = [0, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3, 4, 5, 6, 7, 8]
         self.assertEqual(compute_prefix_function(pattern), expected)
