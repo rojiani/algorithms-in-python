@@ -51,7 +51,6 @@ void print_coins(int *coin_values, int size)
 /* Selection function - unnecessary, assume coin_values sorted high to low */
 
 
-
 /* Driver */
 int main(void)
 {

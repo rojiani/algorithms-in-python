@@ -50,5 +50,9 @@ class TestInversions(unittest.TestCase):
         self.assertEqual(5, inversions(self.B))
         self.assertEqual(2, inversions(self.C))
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__=='__main__':
+    try:
+        unittest.main()
+    except SystemExit as inst:
+        if inst.args[0] is True: # raised by sys.exit(True) when tests failed
+            raise

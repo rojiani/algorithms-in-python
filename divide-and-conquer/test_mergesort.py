@@ -38,5 +38,9 @@ class TestMergeSort(unittest.TestCase):
         self.assertEqual(['a', 'c', 'm', 'x', 'z'], mergesort(self.F))
         self.assertEqual(['abba', 'chimichanga', 'quality', 'zabba'], mergesort(self.G))
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__=='__main__':
+    try:
+        unittest.main()
+    except SystemExit as inst:
+        if inst.args[0] is True: # raised by sys.exit(True) when tests failed
+            raise

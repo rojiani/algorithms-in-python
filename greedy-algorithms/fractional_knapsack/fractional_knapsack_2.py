@@ -16,6 +16,16 @@ def driver():
     print("Solution: " + str(items))
     print("Value = $%.2f" % (value))
 
+    v2 =     [175,      90,         20,     50,     10,     200]
+    w2 =     [10,       9,          4,      2,      1,      20]
+    items2 = []
+    for i in range(len(v2)):
+        items2.append((v2[i], w2[i], v2[i]/w2[i]))
+    MAX_WEIGHT_2 = 20.0
+    value2 = fractional_knapsack(items2, MAX_WEIGHT_2)
+    print("Solution: " + str(items2))
+    print("Value = $%.2f" % (value2))
+
 def fractional_knapsack(items, wmax):
     knapsack = []
     load = 0.0
