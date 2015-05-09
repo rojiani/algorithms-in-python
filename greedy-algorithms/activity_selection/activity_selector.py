@@ -1,3 +1,8 @@
+"""
+Activity Selection
+Greedy Algorithm
+"""
+
 ID = 0
 S_i = 1
 F_i = 2

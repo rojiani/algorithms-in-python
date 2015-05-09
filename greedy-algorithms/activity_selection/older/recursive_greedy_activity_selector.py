@@ -1,3 +1,4 @@
+
 # Greedy Activity Selection - Recursive
 # a = {a_1, a_2, ..., a_n} - set of activities
 # each a_i has a start time s_i and finish time f_i -> 0 <= s_i <= f_i
