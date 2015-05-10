@@ -35,11 +35,21 @@ class Graph(object):
             self.addVertex(v)
     def addEdge(self, u_id, v_id, weight=1.0):
         """ Make an edge connecting u and v """
+
+        # check that u and v are in Graph
         if u_id not in self.vertices:
             raise ValueError('Vertex %d not in Graph' % u)
         elif v_id not in self.vertices:
             raise ValueError('Vertex %d not in Graph' % v)
         u,v = self.vertices[u_id],self.vertices[v_id]
+
+        # check that there isn't already an edge from (u, v)
+        if self.directed and self.getEdge(u_id,v_id) != None: 
+            raise ValueError("Directed Edge (%d,%d) already exists" % (u_id,v_id))
+        if not self.directed and (self.getEdge(u_id,v_id) != None or \
+                                  self.getEdge(v_id,u_id) != None):
+            raise ValueError("Undirected Edge (%d,%d) or (%d,%d) already exists" % \
+                (u_id,v_id,v_id,u_id))
 
         if self.weighted and self.directed:
             edge = Edge(u, v, weight, True, True)
@@ -55,6 +65,7 @@ class Graph(object):
         else:                               # Add to u.connections & v.connections
             u.addConnection(edge)
             v.addConnection(edge)
+
     def getVertex(self, v_id):
         if v_id in self.vertices:
             return self.vertices[v_id]
@@ -62,13 +73,34 @@ class Graph(object):
             return None
     def getEdge(self, src_id, dest_id):
         edge = None
-        for e in self.edges:
-            if e.getSource().getId() == src_id and \
-               e.getDest().getId() == dest_id:
-                edge = e
+        if self.isDirected():
+            for e in self.edges:
+                if e.getSource().getId() == src_id and \
+                        e.getDest().getId() == dest_id:
+                    edge = e
+        else:
+            for e in self.edges:
+                if (e.getSource().getId() == src_id and \
+                    e.getDest().getId() == dest_id) or \
+                   (e.getSource().getId() == dest_id and \
+                       e.getDest().getId() == src_id):
+                    edge = e
         return edge
     def getVertices(self):
-        return self.vertices
+        """ Returns vertices as a list """
+        vertex_list = []
+        indices = list(self.vertices.keys())
+        for i in indices:
+            vertex_list.append(self.getVertex(i))
+        return vertex_list
+    def getNeighbors(self, v):
+        """ 
+        Returns list of vertices adjacent to v. 
+        Undirected graphs: returns list of all adjacent (whether v is src or dest)
+        Directed graphs: returns list of all nodes with v as the source
+        """
+        indices = v.getConnectedIds()
+        return [self.getVertex(i) for i in indices]
     def getEdges(self):
         return self.edges
     def getVertexCount(self):
@@ -123,11 +155,21 @@ class Vertex(object):
         """
         self.connections = {}
         self.visitStatus = VisitStatus.UNDISCOVERED
+        self.distance = float('inf')
+        self.predecessor = None
     def getId(self):
         """ Identifying number - must be positive integer """
         return self.id
     def addConnection(self, edge):
         self.connections[edge.getOppositeVertex(self).getId()] = edge.getWeight()
+    def getConnectedIds(self):
+        """ 
+        Returns list of the IDs of vertices adjacent to v. 
+        Undirected graphs: returns list of all adjacent (whether v is src or dest)
+        Directed graphs: returns list of all nodes with v as the source
+        """
+        return list(self.connections.keys())
+
     # Visitation
     def getVisitStatus(self):
         return self.visitStatus
@@ -135,6 +177,25 @@ class Vertex(object):
         self.visitStatus = status
     def isUndiscovered(self):
         return self.visitStatus == VisitStatus.UNDISCOVERED
+    def markDiscovered(self):
+        self.visitStatus = VisitStatus.DISCOVERED
+
+    def setDistance(self, new_distance):
+        """Set distance (used for traversal/search/paths algorithms)"""
+        self.distance = float(new_distance)
+    def setDistanceWithEdge(self, u, edge):
+        """Set distance for v given (u,v) edge"""
+        self.distance = u.getDistance() + edge.getWeight()
+    def getDistance(self):
+        return self.distance
+    
+    def setPredecessor(self, predecessor):
+        self.predecessor = predecessor
+    def getPredecessor(self):
+        return self.predecessor
+    def hasPredecessor(self):
+        return self.predecessor != None
+
     def connectionsString(self):
         """Return a string representation of all connections"""
         s = 'V<' + str(self.id) + '> Connections: {\n'

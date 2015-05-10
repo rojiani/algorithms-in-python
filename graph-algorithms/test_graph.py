@@ -113,6 +113,10 @@ class TestGraph(unittest.TestCase):
         # also tests G.addEdge(), G.getEdge()
         self.assertFalse(self.ud_uw_edge.isWeighted())
         self.assertFalse(self.ud_uw_edge.isDirected())
+        endpts = self.ud_uw_edge.getEndpoints()
+        self.assertEqual(endpts[0].getId(), 1)
+        self.assertEqual(endpts[1].getId(), 2)
+        self.assertEqual(self.ud_uw_edge.getOppositeVertex(endpts[0]).getId(), 2)
 
         self.assertTrue(self.ud_w_edge.isWeighted())
         self.assertFalse(self.ud_w_edge.isDirected())
@@ -121,7 +125,7 @@ class TestGraph(unittest.TestCase):
         self.assertTrue(self.d_uw_edge.isDirected())
 
         self.assertTrue(self.d_w_edge.isWeighted())
-        self.assertTrue(self.d_w_edge.isDirected())
+        self.assertTrue(self.d_w_edge.isDirected())   
 
     def testVertex(self):
         v1 = self.g1.getVertex(1)

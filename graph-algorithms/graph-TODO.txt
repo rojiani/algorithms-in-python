@@ -3,26 +3,6 @@ TODO
 
 VERTEX:
 
-    # Neighbors/Connections:
-    def addNeighbor(self, edge):
-        if not isinstance(edge, Edge):
-            raise ValueError('addNeighbor() requires an instance of class Edge')
-        if edge.getDest() in self.connections:
-            raise ValueError('Duplicate Vertex')
-        self.connections[edge.getDest()] = edge.getWeight()
-    def getNeighbors(self):
-        """ Return a sorted list of the id #s of the vertex's neighbors.
-            E.g., [0, 2, 4, 5] """
-        return sorted(list(self.connections.keys()))
-    def hasNeighbor(self):
-        """ Whether the vertex is connected to any other vertices """
-        return len(self.connections) > 0
-
-        add instance variable above, maybe an enum
-    def setColor(self, color):
-        self.color = color
-    def getColor(self):
-        return self.color
 
     def setPredecessor(self, predecessor):
         self.predecessor = predecessor
@@ -38,6 +18,8 @@ VERTEX:
         return self.pathCost
 
 GRAPH:
+    remove edge, remove V
+    connectedComponent(self, v) [aka connectedSubgraph, use BFS/DFS]
     refactor Graph, Digraph subclass
     addVerticesFromList
     hasCycle
