@@ -91,14 +91,13 @@ class Graph(object):
         s = 'GRAPH:\n'
         s += '%s\n' % 'Weighted' if self.weighted else 'Unweighted\n'
         s += '%s\n' % 'Directed' if self.directed else 'Undirected\n'
-        s += '===== Vertices (%d) =====\n' % self.getVertexCount()
+        s += '================ Vertices (%d) ================\n' % self.getVertexCount()
         for v in self.vertices:
             s += '\t' + str(v) + '\n'
-        s += '===== Edges (%d) =====\n' % self.getEdgeCount()
+        s += '================= Edges (%d) ==================\n' % self.getEdgeCount()
         for e in self.edges:
             s += '\t' + str(e) + '\n'
         return s
-
 
 
 #----------------------------------------------------------------------------#
@@ -134,22 +133,16 @@ class Vertex(object):
         return self.visitStatus
     def setVisitStatus(self, status):
         self.visitStatus = status
-    def isUnvisited(self):
+    def isUndiscovered(self):
         return self.visitStatus == VisitStatus.UNDISCOVERED
     def connectionsString(self):
-        s = 'V<' + str(self.id) + '> Connections: [ '
-        for adj in self.connections:
-            s += str(adj) + ' '
-        s += ']'
+        """Return a string representation of all connections"""
+        s = 'V<' + str(self.id) + '> Connections: {\n'
+        for i in list(self.connections.keys()):
+            s += '\t' + str(i) + ': ' + str(self.connections[i]) + '\n'
+        s += '}'
         return s
-    def outgoingEdgesString(self):
-        """ Return a string representation of all outgoing edges """
-        s = 'V<' + self.id + '> Connections: [ '
-        for i in range(list(self.connections.keys())):
-            s += str(self.connections.keys()[i])
-            s += ' <W = %.2f>,' % self.connections[i]
-        s = s[:-1] + ' ]'
-        return s
+
     def __str__(self):
         return 'V<%d>' % self.id
 

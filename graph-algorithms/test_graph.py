@@ -123,18 +123,44 @@ class TestGraph(unittest.TestCase):
         self.assertTrue(self.d_w_edge.isWeighted())
         self.assertTrue(self.d_w_edge.isDirected())
 
-    def testGraphSetup(self):
-        print(self.g1)
-        print(self.g2)
-        print(self.g3)
-        print(self.g4)
+    def testVertex(self):
+        v1 = self.g1.getVertex(1)
+        print(v1)
+        print(v1.connectionsString())
+        v2 = self.g1.getVertex(2)
+        print(v2.connectionsString())
 
-        g5 = Graph()
-        vertices = []
-        for i in range(11):
-            vertices.append(Vertex(i))
-        g5.addVerticesFromList(vertices)
-        print(g5)
+        v4 = self.g4.getVertex(2)
+        print(v4.connectionsString())
+        v5 = self.g4.getVertex(3)
+        print(v5.connectionsString())        
+
+        self.assertTrue(v1.isUndiscovered())
+        self.assertEqual(v1.getVisitStatus(), VisitStatus.UNDISCOVERED)
+        v1.setVisitStatus(VisitStatus.DISCOVERED)
+        self.assertEqual(v1.getVisitStatus(), VisitStatus.DISCOVERED)
+        self.assertEqual(self.g1.getDegree(v1), 2)
+
+        self.assertEqual(self.g4.getDegree(v4), 6)
+
+        self.g1.addVertex(Vertex(9))
+        v9 = self.g1.getVertex(9)
+        self.assertTrue(self.g1.isIsolated(v9))
+
+        print(self.g1)
+
+    # def testGraphSetup(self):
+        # print(self.g1)
+        # print(self.g2)
+        # print(self.g3)
+        # print(self.g4)
+
+        # g5 = Graph()
+        # vertices = []
+        # for i in range(11):
+        #     vertices.append(Vertex(i))
+        # g5.addVerticesFromList(vertices)
+        # print(g5)
 
 if __name__=='__main__':
     try:
