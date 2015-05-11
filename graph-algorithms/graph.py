@@ -182,13 +182,12 @@ class Vertex(object):
 
     def setDistance(self, new_distance):
         """Set distance (used for traversal/search/paths algorithms)"""
-        self.distance = float(new_distance)
-    def setDistanceWithEdge(self, u, edge):
-        """Set distance for v given (u,v) edge"""
-        self.distance = u.getDistance() + edge.getWeight()
+        self.distance = new_distance
     def getDistance(self):
         return self.distance
     
+    """Path cost methods (not same as path distance)"""
+
     def setPredecessor(self, predecessor):
         self.predecessor = predecessor
     def getPredecessor(self):

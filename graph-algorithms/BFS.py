@@ -37,8 +37,8 @@ def BFS(G, s):
                 edge_strings.append(str(uv_edge))
                 v.markDiscovered()
                 v.setPredecessor(u)
-                v.setDistanceWithEdge(u, uv_edge)
-
+                v.setDistance(u.getDistance() + 1)
+                # print("Distance to %d: %d" % (v.getId(), v.getDistance()))
                 Q.enqueue(v)
         u.setVisitStatus(VisitStatus.EXPLORED)
     print_BFS_edges(edge_strings)
