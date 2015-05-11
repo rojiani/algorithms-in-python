@@ -5,6 +5,8 @@ Graph Algorithm
 
 from graph import *
 from queue import LinkedQueue
+from sample_graphs import *
+
 
 def init_BFS(G):
     """Initialize values prior to performing BFS.
@@ -80,48 +82,6 @@ def print_BFS_edges(edge_strings):
     print("Edges traversed during BFS:")
     for s in edge_strings:
         print(s)    
-
-# CLRS Fig. 22.3 Graph p. 596
-# Undirected, unweighted
-def setup_fig_22_3_graph():
-    g = Graph()
-    vertices = []
-    for i in range(1,9): # r-y
-        vertices.append(Vertex(i))
-    g.addVerticesFromList(vertices)
-    g.addEdge(1,2)
-    g.addEdge(1,5)
-    g.addEdge(2,6)
-    g.addEdge(3,4)
-    g.addEdge(3,6)
-    g.addEdge(3,7)
-    g.addEdge(4,7)
-    g.addEdge(4,8)
-    g.addEdge(6,7)
-    g.addEdge(7,8)
-    return g
-
-def setup_directed_graph():
-    g = Graph(True,False)
-    vertices = []
-    for i in range(8):
-        vertices.append(Vertex(i))
-    g.addVerticesFromList(vertices)
-    g.addEdge(0,1)
-    g.addEdge(0,2)
-    g.addEdge(1,0)
-    g.addEdge(1,2)
-    g.addEdge(1,5)
-    g.addEdge(1,6)
-    g.addEdge(3,7)
-    g.addEdge(4,7)
-    g.addEdge(5,3)
-    g.addEdge(6,2)
-    g.addEdge(6,5)
-    g.addEdge(6,7)
-    g.addEdge(7,6)
-    print(g)
-    return g
 
 # Demo
 def bfs_undirected():

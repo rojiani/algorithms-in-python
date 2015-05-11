@@ -24,19 +24,19 @@ class Graph(object):
 
         self.directed = directed
         self.weighted = weighted
-    def addVertex(self, vertex):
-        id = vertex.getId()
-        if id in self.vertices:
-            raise ValueError('Vertex %d already in Graph' % (id))
+    def addVertex(self, v_id):
+        # id = vertex.getId()
+        if v_id in self.vertices:
+            raise ValueError('Vertex %d already in Graph' % (v_id))
         else:
-            self.vertices[id] = vertex
-    def addVerticesFromList(self, vertices):
-        for v in vertices:
-            self.addVertex(v)
+            self.vertices[v_id] = Vertex(v_id)
+    def addVerticesFromList(self, v_id_list):
+        for v_id in v_id_list:
+            self.addVertex(v_id)
     def addEdge(self, u_id, v_id, weight=1.0):
         """ Make an edge connecting u and v """
 
-        # check that u and v are in Graph
+        # check that u and v are in Graph        
         if u_id not in self.vertices:
             raise ValueError('Vertex %d not in Graph' % u_id)
         elif v_id not in self.vertices:
@@ -223,6 +223,10 @@ class Vertex(object):
         self.visitStatus = status
     def isUndiscovered(self):
         return self.visitStatus == VisitStatus.UNDISCOVERED
+    def isDiscovered(self):
+        return self.visitStatus == VisitStatus.DISCOVERED
+    def isExplored(self):
+        return self.visitStatus == VisitStatus.EXPLORED
     def markDiscovered(self):
         self.visitStatus = VisitStatus.DISCOVERED
     def markExplored(self):
