@@ -38,9 +38,9 @@ class Graph(object):
 
         # check that u and v are in Graph
         if u_id not in self.vertices:
-            raise ValueError('Vertex %d not in Graph' % u)
+            raise ValueError('Vertex %d not in Graph' % u_id)
         elif v_id not in self.vertices:
-            raise ValueError('Vertex %d not in Graph' % v)
+            raise ValueError('Vertex %d not in Graph' % v_id)
         u,v = self.vertices[u_id],self.vertices[v_id]
 
         # check that there isn't already an edge from (u, v)
@@ -92,15 +92,58 @@ class Graph(object):
         indices = list(self.vertices.keys())
         for i in indices:
             vertex_list.append(self.getVertex(i))
-        return vertex_list
-    def getNeighbors(self, v):
+        return sorted(vertex_list, key=id)
+    def getAdjacentVertices(self, u):
         """ 
-        Returns list of vertices adjacent to v. 
-        Undirected graphs: returns list of all adjacent (whether v is src or dest)
-        Directed graphs: returns list of all nodes with v as the source
+        Returns list of vertices adjacent to u.
+        Undirected & directed graphs: returns list of all adjacent (whether u is src or dest)
         """
-        indices = v.getConnectedIds()
-        return [self.getVertex(i) for i in indices]
+        adjV = []
+        for e in self.getEdges():
+            if u.getId() == e.getSource().getId():
+                adjV.append(e.getDest())
+            elif u.getId() == e.getDest().getId():
+                adjV.append(e.getSource())
+        return adjV
+
+    def getChildVertices(self, u):
+        """ 
+        Returns list of vertices adjacent to u that are connected by an edge (u,v)
+        Undirected graphs: returns list of all adjacent vertices
+        Directed graphs: returns list of all adjacent vertices with u as the source
+        """
+        if self.directed:
+            dests = []
+            for e in self.getEdges():
+                if u.getId() == e.getSource().getId():
+                    dests.append(e.getDest())
+            return dests
+        else:
+            return self.getAdjacentVertices(u)
+
+    def getAdjacentEdges(self, u):
+        """ 
+        Returns list of edges adjacent to v. 
+        Undirected & directed graphs: returns list of all adjacent (whether u is src or dest)
+        """
+        adjE = []
+        for e in self.getEdges():
+            if u.getId() == e.getSource().getId():
+                adjE.append(e)
+            elif u.getId() == e.getDest().getId():
+                adjE.append(e)
+        return adjE
+    def getOutgoingEdges(self, u):
+        if self.directed:
+            outE = []
+            for e in self.getEdges():
+                if u.getId() == e.getSource().getId():
+                    outE.append(e)
+            return outE
+        else:
+            return self.getAdjacentEdges(u)
+
+
     def getEdges(self):
         return self.edges
     def getVertexCount(self):
@@ -119,6 +162,7 @@ class Graph(object):
         return degree
     def isIsolated(self, v):
         return self.getDegree(v) == 0
+
     def __str__(self):
         s = 'GRAPH:\n'
         s += '%s\n' % 'Weighted' if self.weighted else 'Unweighted\n'
@@ -157,6 +201,8 @@ class Vertex(object):
         self.visitStatus = VisitStatus.UNDISCOVERED
         self.distance = float('inf')
         self.predecessor = None
+        self.timeDiscovered = None
+        self.timeFinished = None
     def getId(self):
         """ Identifying number - must be positive integer """
         return self.id
@@ -179,6 +225,8 @@ class Vertex(object):
         return self.visitStatus == VisitStatus.UNDISCOVERED
     def markDiscovered(self):
         self.visitStatus = VisitStatus.DISCOVERED
+    def markExplored(self):
+        self.visitStatus = VisitStatus.EXPLORED
 
     def setDistance(self, new_distance):
         """Set distance (used for traversal/search/paths algorithms)"""
@@ -187,13 +235,28 @@ class Vertex(object):
         return self.distance
     
     """Path cost methods (not same as path distance)"""
+    # TODO
 
+    """Predecessor - used for BFS and other algorithms"""
     def setPredecessor(self, predecessor):
         self.predecessor = predecessor
     def getPredecessor(self):
         return self.predecessor
     def hasPredecessor(self):
         return self.predecessor != None
+
+    """Time Discovered & Time Finished - used for DFS"""
+    def getTimeDiscovered(self):
+        return self.timeDiscovered
+    def setTimeDiscovered(self, time):
+        self.timeDiscovered = time
+    def getTimeFinished(self):
+        return self.timeFinished
+    def setTimeFinished(self, time):
+        self.timeFinished = time
+
+    def hasLoop(self):
+        return self.getId() in self.connections
 
     def connectionsString(self):
         """Return a string representation of all connections"""
@@ -252,3 +315,59 @@ class Edge(object):
             return '( %d <==[%.2f]==> %d )' % (self.src.getId(),self.getWeight(), self.dest.getId())
         else:
             return '( %d <====> %d )' % (self.src.getId(), self.dest.getId())
+
+def fig_22_4_graph():
+    dg = Graph(True, False)
+    vertices = []
+    for i in range(1, 7):
+        vertices.append(Vertex(i))
+    dg.addVerticesFromList(vertices)    
+    dg.addEdge(1,2)
+    dg.addEdge(1,4)
+    dg.addEdge(2,5)
+    dg.addEdge(3,5)
+    dg.addEdge(3,6)
+    dg.addEdge(4,2)
+    dg.addEdge(5,4)
+    dg.addEdge(6,6)
+    return dg
+
+def setup_graph_2():
+    dg = Graph(True, False)
+    vertices = []
+    for i in range(1, 9):
+        vertices.append(Vertex(i))
+    dg.addVerticesFromList(vertices)    
+    dg.addEdge(1,2)
+    dg.addEdge(1,4)    
+    dg.addEdge(1,5)
+    dg.addEdge(2,3)
+    dg.addEdge(2,4)
+    dg.addEdge(3,1)
+    dg.addEdge(4,3)
+    dg.addEdge(5,4)
+    dg.addEdge(5,6)
+    dg.addEdge(7,5)
+    dg.addEdge(7,6)
+    dg.addEdge(7,8)
+    dg.addEdge(8,5)
+    return dg
+
+# test getAdjacentVertices, getChildVertices, getAdjacentEdges, getOutgoingEdges
+# dg = setup_graph_2()
+# u1 = dg.getVertex(1)
+# adj1 = dg.getAdjacentVertices(u1)
+# for a in adj1:
+#     print(a)
+# out1 = dg.getChildVertices(u1)
+# print()
+# for o in out1:
+#     print(o)
+
+# adjE1 = dg.getAdjacentEdges(u1)
+# for a in adjE1:
+#     print(a)
+# outE1 = dg.getOutgoingEdges(u1)
+# print()
+# for o in outE1:
+#     print(o)

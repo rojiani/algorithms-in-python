@@ -1,5 +1,8 @@
-"""
-TODO
+Python Graph Data Structures & Algorithms  
+=========================================  
+
+
+# TODO
 
 VERTEX:
 
@@ -29,4 +32,3 @@ GRAPH:
     hasEulerianPath
     def getNumberOutgoingEdges(self, v):
 
-"""
