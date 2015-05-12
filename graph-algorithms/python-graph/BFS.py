@@ -4,7 +4,7 @@ Graph Algorithm
 """
 
 from graph import *
-from queue import LinkedQueue
+from datastructures.queue import LinkedQueue
 from sample_graphs import *
 
 

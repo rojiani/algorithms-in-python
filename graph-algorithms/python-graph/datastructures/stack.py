@@ -19,10 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Derived from above, added/changed a few minor things
-"""
-
 class ArrayStack:
     """LIFO Stack implementation using a Python list as underlying storage."""
 
@@ -59,7 +55,7 @@ class ArrayStack:
         aka peek()
         """
         if self.is_empty():
-          raise Empty('Stack is empty')
+          raise Exception('Stack is empty')
         return self._data[-1]                 # the last item in the list
 
     def pop(self):
@@ -68,7 +64,7 @@ class ArrayStack:
         Raise exception if the stack is empty.
         """
         if self.is_empty():
-          raise Empty('Stack is empty')
+          raise Exception('Stack is empty')
         return self._data.pop()               # remove last item from list
 
     def clear(self):
@@ -116,4 +112,5 @@ if __name__ == '__main__':
     S.pop()
     print(S)  
     S.pop()
-    print(S)    
+    print(S)   
+    S.pop() 

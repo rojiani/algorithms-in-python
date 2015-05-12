@@ -7,69 +7,29 @@ class TestGraph(unittest.TestCase):
     def setUp(self):
         # Undirected, Unweighted
         self.g1 = Graph()
-        self.g1.addVertex(Vertex(1))
-        self.g1.addVertex(Vertex(2))
-        self.g1.addVertex(Vertex(3))
-        self.g1.addVertex(Vertex(4))
-        self.g1.addVertex(Vertex(5))
-        self.g1.addEdge(1,2)
-        self.g1.addEdge(1,5)
-        self.g1.addEdge(2,3)
-        self.g1.addEdge(2,4)
-        self.g1.addEdge(2,5)
-        self.g1.addEdge(3,4)
+        self.g1.addVertices(list(range(1,5+1)))
+        self.g1.addEdges([(1,2), (1,5), (2,3), (2,4), (2,5), (3,4)])
 
         self.ud_uw_edge = self.g1.getEdge(1,2) 
 
         # Undirected, Weighted Graph
         self.g2 = Graph(False, True)
-        self.g2.addVertex(Vertex(1))
-        self.g2.addVertex(Vertex(2))
-        self.g2.addVertex(Vertex(3))
-        self.g2.addVertex(Vertex(4))
-        self.g2.addVertex(Vertex(5))
-        self.g2.addEdge(1,2,20)
-        self.g2.addEdge(1,5,21)
-        self.g2.addEdge(2,3,22)
-        self.g2.addEdge(2,4,23)
-        self.g2.addEdge(2,5,24)
-        self.g2.addEdge(3,4,25)
+        self.g2.addVertices(list(range(1,5+1)))
+        self.g2.addEdges([(1,2,20), (1,5,21), (2,3,22), (2,4,23), (2,5,24), (3,4,25)])
 
         self.ud_w_edge = self.g2.getEdge(1,2) 
 
         # Directed, Unweighted Graph
         self.g3 = Graph(True, False)
-        self.g3.addVertex(Vertex(1))
-        self.g3.addVertex(Vertex(2))
-        self.g3.addVertex(Vertex(3))
-        self.g3.addVertex(Vertex(4))
-        self.g3.addVertex(Vertex(5))
-        self.g3.addEdge(1,2)
-        self.g3.addEdge(2,3)
-        self.g3.addEdge(2,4)
-        self.g3.addEdge(2,5)
-        self.g3.addEdge(3,4)        
-        self.g3.addEdge(4,2)        
-        self.g3.addEdge(5,1)
-        self.g3.addEdge(5,2)      
+        self.g3.addVertices(list(range(1,5+1)))
+        self.g3.addEdges([(1,2), (2,3), (2,4), (2,5), (3,4), (4,2), (5,1), (5,2)])
 
         self.d_uw_edge = self.g3.getEdge(1,2)
 
         # Directed, Weighted Graph
         self.g4 = Graph(True, True)
-        self.g4.addVertex(Vertex(1))
-        self.g4.addVertex(Vertex(2))
-        self.g4.addVertex(Vertex(3))
-        self.g4.addVertex(Vertex(4))
-        self.g4.addVertex(Vertex(5))
-        self.g4.addEdge(1,2,10)
-        self.g4.addEdge(2,3,11)
-        self.g4.addEdge(2,4,12)
-        self.g4.addEdge(2,5,13)
-        self.g4.addEdge(3,4,14)        
-        self.g4.addEdge(4,2,15)        
-        self.g4.addEdge(5,1,16)
-        self.g4.addEdge(5,2,17)        
+        self.g4.addVertices(list(range(1,5+1)))
+        self.g4.addEdges([(1,2,10),(2,3,11),(2,4,12),(2,5,13),(3,4,14),(4,2,15),(5,1,16),(5,2,17)])
 
         self.d_w_edge = self.g4.getEdge(1,2)
 
@@ -147,7 +107,7 @@ class TestGraph(unittest.TestCase):
 
         self.assertEqual(self.g4.getDegree(v4), 6)
 
-        self.g1.addVertex(Vertex(9))
+        self.g1.addVertex(9)
         v9 = self.g1.getVertex(9)
         self.assertTrue(self.g1.isIsolated(v9))
 
@@ -162,7 +122,7 @@ class TestGraph(unittest.TestCase):
         # g5 = Graph()
         # vertices = []
         # for i in range(11):
-        #     vertices.append(Vertex(i))
+        #     vertices.append(i)
         # g5.addVerticesFromList(vertices)
         # print(g5)
 

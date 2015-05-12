@@ -30,7 +30,8 @@ class Graph(object):
             raise ValueError('Vertex %d already in Graph' % (v_id))
         else:
             self.vertices[v_id] = Vertex(v_id)
-    def addVerticesFromList(self, v_id_list):
+    def addVertices(self, v_id_list):
+        """Add vertices from a list of ids"""
         for v_id in v_id_list:
             self.addVertex(v_id)
     def addEdge(self, u_id, v_id, weight=1.0):
@@ -65,7 +66,18 @@ class Graph(object):
         else:                               # Add to u.connections & v.connections
             u.addConnection(edge)
             v.addConnection(edge)
-
+    def addEdges(self, edge_list):
+        """Add edges from list of tuples containing the edges"""
+        for e_tup in edge_list:
+            n_args = len(e_tup)
+            if n_args == 2:
+                self.addEdge(e_tup[0], e_tup[1])
+            elif n_args == 3:
+                self.addEdge(e_tup[0], e_tup[1], e_tup[2])
+            elif n_args == 4:
+                self.addEdge(e_tup[0], e_tup[1], e_tup[2], e_tup[3])
+            else:
+                self.addEdge(e_tup[0], e_tup[1], e_tup[2], e_tup[3], e_tup[4])
     def getVertex(self, v_id):
         if v_id in self.vertices:
             return self.vertices[v_id]
@@ -320,42 +332,6 @@ class Edge(object):
         else:
             return '( %d <====> %d )' % (self.src.getId(), self.dest.getId())
 
-def fig_22_4_graph():
-    dg = Graph(True, False)
-    vertices = []
-    for i in range(1, 7):
-        vertices.append(Vertex(i))
-    dg.addVerticesFromList(vertices)    
-    dg.addEdge(1,2)
-    dg.addEdge(1,4)
-    dg.addEdge(2,5)
-    dg.addEdge(3,5)
-    dg.addEdge(3,6)
-    dg.addEdge(4,2)
-    dg.addEdge(5,4)
-    dg.addEdge(6,6)
-    return dg
-
-def setup_graph_2():
-    dg = Graph(True, False)
-    vertices = []
-    for i in range(1, 9):
-        vertices.append(Vertex(i))
-    dg.addVerticesFromList(vertices)    
-    dg.addEdge(1,2)
-    dg.addEdge(1,4)    
-    dg.addEdge(1,5)
-    dg.addEdge(2,3)
-    dg.addEdge(2,4)
-    dg.addEdge(3,1)
-    dg.addEdge(4,3)
-    dg.addEdge(5,4)
-    dg.addEdge(5,6)
-    dg.addEdge(7,5)
-    dg.addEdge(7,6)
-    dg.addEdge(7,8)
-    dg.addEdge(8,5)
-    return dg
 
 # test getAdjacentVertices, getChildVertices, getAdjacentEdges, getOutgoingEdges
 # dg = setup_graph_2()

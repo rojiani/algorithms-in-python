@@ -4,7 +4,7 @@ Graph Algorithm
 """
 
 from graph import *
-from stack import ArrayStack
+from datastructures.stack import ArrayStack
 from sample_graphs import *
 
 time = 0
@@ -221,6 +221,9 @@ DFS_timestamps_edges_2()
 # # print(is_acyclic(g2))
 # # print(is_acyclic(g3))
 # print(is_acyclic(g4))
+
+# TOPO SORT
+print("Topological Sort")
 # tsorted = topo_sort(g4)
 # for v in tsorted:
 #     print(v)
