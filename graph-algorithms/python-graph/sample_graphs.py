@@ -53,6 +53,14 @@ def setup_DAG_2():
     dag.addEdges([(1,2), (1,5), (2,3), (2,5), (4,5), (6,3), (6,7), (7,8)])
     return dag
 
+# Figure 24.5 p. 593
+def setup_DAG_3():
+    dag = Graph(True, True)
+    dag.addVertices(list(range(6)))
+    dag.addEdges([(0,1,5), (0,2,3), (1,2,2), (1,3,6), (2,3,7),(2,4,4), \
+                  (2,5,2), (3,4,-1), (3,5,1), (4,5,-2)])
+    return dag
+
 # Figure CLRS Instructor's Manual 2/E
 def setup_MST_1():
     ud_w_g = Graph(False, True)
@@ -66,7 +74,7 @@ def setup_MST_1():
 def setup_MST_2():
     ud_w_g = Graph(False, True)
     ud_w_g.addVertices(list(range(1,9+1)))
-    ud_w_g.addEdges([(1,2,4),(1,8,8),(2,3,8),(2,8,11),(3,4,7),(3,6,4),(3,9,2), \
+    ud_w_g.addEdges([(1,2,4),(1,8,8),(2,3,8),(2,8,11),(3,4,7),(3,6,4),(3,9,2),\
                     (4,5,9),(4,6,14),(5,6,10),(6,7,2),(7,8,1),(7,9,6),(8,9,7)])                
     return ud_w_g
 

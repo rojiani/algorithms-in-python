@@ -4,7 +4,7 @@ Based on CLRS Ch. 23
 """
 
 from sample_graphs import *
-
+from DFS import *
 # s = start node
 def init_single_source(G, s):
     for v in G.getVertices():
@@ -50,7 +50,7 @@ def print_shortest_path(G, s, t):
     while v != None:
         path.insert(0, v)
         v = v.getPredecessor()
-    print("Shortest path from %s to %s [Distance (Cost) = %s: " % (str(s), str(t), dist))
+    print("Shortest path from %s to %s [Distance (Cost) = %s]" % (str(s), str(t), dist))
     for v in path: print(v)
 
 def demo_bellman_ford():
@@ -60,7 +60,7 @@ def demo_bellman_ford():
     for v in g.getVertices():
         print_shortest_path(g, s, v)
 
-demo_bellman_ford()
+#demo_bellman_ford()
 
 #-----------------------------------------------------------------------------#
 #   Dijkstra                                                                  #
@@ -68,4 +68,25 @@ demo_bellman_ford()
 
 # Edge weights must be nonnegative.
 
-# TODO
+# TODO 
+
+
+#-----------------------------------------------------------------------------#
+#   SS SP in DAGs                                                                  #
+#-----------------------------------------------------------------------------#
+def ss_shortest_paths_DAG(G, s):
+    sorted_v = topo_sort(G)
+    init_single_source(G, s)
+    for u in sorted_v:
+        # getAdjacentVertices?
+        for v in G.getChildVertices(u):
+            relax(G.getEdge( u.getId(), v.getId() ))
+
+def ss_sp_DAG_demo():
+    dag = setup_DAG_3()
+    s = dag.getVertex(1)
+    ss_shortest_paths_DAG(dag, s)
+    for v in dag.getVertices():
+        print_shortest_path(dag, s, v)
+
+ss_sp_DAG_demo()

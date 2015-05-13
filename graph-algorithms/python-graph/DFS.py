@@ -190,7 +190,7 @@ def DFS_timestamps_edges_2UD():
 # DFS_timestamps_2()
 # print()
 # DFS_timestamps_edges()
-DFS_timestamps_edges_2()
+# DFS_timestamps_edges_2()
 # DFS_iterative_timestamps_2()
 # g = setup_graph_2UD()
 # # for e in g.getEdges():
@@ -223,12 +223,12 @@ DFS_timestamps_edges_2()
 # print(is_acyclic(g4))
 
 # TOPO SORT
-print("Topological Sort")
-# tsorted = topo_sort(g4)
+# print("Topological Sort")
+# # tsorted = topo_sort(g4)
+# # for v in tsorted:
+# #     print(v)
+# g5 = setup_DAG_2()
+# print(is_acyclic(g5))
+# tsorted = topo_sort(g5)
 # for v in tsorted:
-#     print(v)
-g5 = setup_DAG_2()
-print(is_acyclic(g5))
-tsorted = topo_sort(g5)
-for v in tsorted:
-    print(v, end=',')    
+#     print(v, end=',')    
