@@ -1,11 +1,14 @@
-#
-# Graph ADT
-# @author Navid Rojiani
-#
+"""
+Graph ADT
+@author Navid Rojiani
+"""
 
 
 from enum import Enum
 
+#-----------------------------------------------------------------------------#
+#   Graph                                                                     #
+#-----------------------------------------------------------------------------#
 class Graph(object):
     def __init__(self, directed=False, weighted=False):
         """
@@ -188,8 +191,9 @@ class Graph(object):
         return s
 
 
-#----------------------------------------------------------------------------#
-
+#-----------------------------------------------------------------------------#
+#   Vertex                                                                    #
+#-----------------------------------------------------------------------------#
 class Vertex(object):
     def __init__(self, id):
         self.id = int(id)          # positive integer ID
@@ -211,7 +215,8 @@ class Vertex(object):
         """
         self.connections = {}
         self.visitStatus = VisitStatus.UNDISCOVERED
-        self.distance = float('inf')
+        self.path_length = float('inf')
+        self.path_cost = float('inf')
         self.predecessor = None
         self.timeDiscovered = None
         self.timeFinished = None
@@ -244,14 +249,17 @@ class Vertex(object):
     def markExplored(self):
         self.visitStatus = VisitStatus.EXPLORED
 
-    def setDistance(self, new_distance):
-        """Set distance (used for traversal/search/paths algorithms)"""
-        self.distance = new_distance
-    def getDistance(self):
-        return self.distance
+    """ Path length used to refer to number of edges, used in BFS """
+    def getPathLength(self):
+        return self.path_length
+    def setPathLength(self, path_len):
+        self.path_length = path_len
     
-    """Path cost methods (not same as path distance)"""
-    # TODO
+    """Path cost = sum of weights of edges on path, aka path distance """
+    def setPathCost(self, path_cost):
+        self.path_cost = path_cost
+    def getPathCost(self):
+        return self.path_cost
 
     """Predecessor - used for BFS and other algorithms"""
     def setPredecessor(self, predecessor):
@@ -292,7 +300,9 @@ class VisitStatus(Enum):
     EXPLORED      = 'Black'         # All neighbors discovered
 
 
-#----------------------------------------------------------------------------#
+#-----------------------------------------------------------------------------#
+#   Edge                                                                      #
+#-----------------------------------------------------------------------------#
 class Edge(object):
     def __init__(self, src, dest, weight= 1.0, weighted=False, directed=False):
         """Assumes src and dest are vertices"""
@@ -331,23 +341,3 @@ class Edge(object):
             return '( %d <==[%.2f]==> %d )' % (self.src.getId(),self.getWeight(), self.dest.getId())
         else:
             return '( %d <====> %d )' % (self.src.getId(), self.dest.getId())
-
-
-# test getAdjacentVertices, getChildVertices, getAdjacentEdges, getOutgoingEdges
-# dg = setup_graph_2()
-# u1 = dg.getVertex(1)
-# adj1 = dg.getAdjacentVertices(u1)
-# for a in adj1:
-#     print(a)
-# out1 = dg.getChildVertices(u1)
-# print()
-# for o in out1:
-#     print(o)
-
-# adjE1 = dg.getAdjacentEdges(u1)
-# for a in adjE1:
-#     print(a)
-# outE1 = dg.getOutgoingEdges(u1)
-# print()
-# for o in outE1:
-#     print(o)

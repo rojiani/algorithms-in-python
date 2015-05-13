@@ -4,23 +4,14 @@ Python Graph Data Structures & Algorithms
 
 # TODO
 
+
 VERTEX:
+instead of having Vertex have edgeLength, pathCost, predecessor, etc. methods,
+might be cleaner to track those using lists in the actual algorithms.
 
-
-    def setPredecessor(self, predecessor):
-        self.predecessor = predecessor
-    def getPredecessor(self):
-        return self.predecessor
-    def hasPredecessor(self):
-        return self.predecessor != None
-
-    Path Cost or Distance to this vertex
-    def setPathCost(self, cost):
-        self.pathCost = cost
-    def getPathCost(self):
-        return self.pathCost
 
 GRAPH:
+    graph contain element, not just an id
     remove edge, remove V
     connectedComponent(self, v) [aka connectedSubgraph, use BFS/DFS]
     refactor Graph, Digraph subclass

@@ -14,7 +14,7 @@ def init_BFS(G):
     for v in G.getVertices():
         v.setVisitStatus(VisitStatus.UNDISCOVERED)
         v.setPredecessor(None)
-        v.setDistance(float('inf'))
+        v.setPathLength(float('inf'))
 
 
 # s = start node
@@ -22,7 +22,7 @@ def BFS(G, s):
     init_BFS(G)
 
     s.setVisitStatus(VisitStatus.DISCOVERED)
-    s.setDistance(0)
+    s.setPathLength(0)
     s.setPredecessor(None)
 
     Q = LinkedQueue()
@@ -33,15 +33,15 @@ def BFS(G, s):
             if v.isUndiscovered():
                 v.markDiscovered()
                 v.setPredecessor(u)
-                v.setDistance(u.getDistance() + 1)
+                v.setPathLength(u.getPathLength() + 1)
                 Q.enqueue(v)
         u.markExplored()
 
-def BFS_print_edges_and_distance(G, s):
+def BFS_print_edges_and_path_length(G, s):
     init_BFS(G)
 
     s.setVisitStatus(VisitStatus.DISCOVERED)
-    s.setDistance(0)
+    s.setPathLength(0)
     s.setPredecessor(None)
 
     Q = LinkedQueue()
@@ -56,13 +56,14 @@ def BFS_print_edges_and_distance(G, s):
                 edge_strings.append(str(uv_edge))
                 v.markDiscovered()
                 v.setPredecessor(u)
-                v.setDistance(u.getDistance() + 1)
-                print("Distance to %s: %d" % (str(v), v.getDistance()))
+                v.setPathLength(u.getPathLength() + 1)
+                print("Path Length (# Edges) to %s: %d" % (str(v), v.getPathLength()))
                 Q.enqueue(v)
         u.setVisitStatus(VisitStatus.EXPLORED)
     print_BFS_edges(edge_strings)
 
-# Prints a breadth-first tree from s to v. 
+# Prints a breadth-first tree from s to v, which is a single-source shortest
+# path if G is unweighted.
 # Assumes that BFS already run on G, with s as the source.
 # See CLRS p. 601
 def print_path(G,s,v):
@@ -90,7 +91,7 @@ def bfs_undirected():
     print(ug)
     print("Running BFS(ug,2):")
     # BFS(ug, ug.getVertex(2))
-    BFS_print_edges_and_distance(ug, ug.getVertex(2))
+    BFS_print_edges_and_path_length(ug, ug.getVertex(2))
 
 def bfs_undirected_path():
     ug = setup_fig_22_3_graph()
@@ -117,7 +118,7 @@ def bfs_directed():
     print(dg)
     print("Running BFS(dg, 0):")
     #BFS(dg, dg.getVertex(0))
-    BFS_print_edges_and_distance(dg, dg.getVertex(0))
+    BFS_print_edges_and_path_length(dg, dg.getVertex(0))
 
 def bfs_directed_path():
     dg = setup_directed_graph()
@@ -141,3 +142,6 @@ def bfs_directed_path():
 # bfs_undirected_path()
 # bfs_directed()
 bfs_directed_path()
+
+g = setup_directed_graph()
+BFS(g, g.getVertex(0))

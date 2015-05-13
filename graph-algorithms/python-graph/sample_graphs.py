@@ -69,6 +69,16 @@ def setup_MST_2():
     ud_w_g.addEdges([(1,2,4),(1,8,8),(2,3,8),(2,8,11),(3,4,7),(3,6,4),(3,9,2), \
                     (4,5,9),(4,6,14),(5,6,10),(6,7,2),(7,8,1),(7,9,6),(8,9,7)])                
     return ud_w_g
+
+# Figure 24.4, p. 652
+# Directed graph with some negative-weight edges (no neg.-wt cycles)
+def setup_bellman_ford_graph():
+    g = Graph(True, True)
+    g.addVertices(list(range(5)))
+    g.addEdges([(0,1,6), (0,3,7), (1,2,5), (1,3,8), (1,4,-4), (2,1,-2), \
+                   (3,2,-3), (3,4,9), (4,0,2), (4,2,7)])
+    return g
+
 # print("Fig. 22.3 Graph:")
 # print(setup_fig_22_3_graph())
 # print("---------------------------------------------")

@@ -86,32 +86,32 @@ def verify_graph(G):
 demo_Kruskal()
 
 #-----------------------------------------------------------------------------#
-#   Prim's Algorithm                                                       #
+#   Prim's Algorithm                                                          #
 #-----------------------------------------------------------------------------#
-
+""" Incomplete """
 # root - an arbitrary vertex in G
-def MST_Prim(G, root=None):
-    verify_graph(G)             # Verify graph is weighted and undirected
-    V = G.getVertices()
-    if root == None:
-        root = V[0]             # Choose arbitrary vertex as root
+# def MST_Prim(G, root=None):
+#     verify_graph(G)             # Verify graph is weighted and undirected
+#     V = G.getVertices()
+#     if root == None:
+#         root = V[0]             # Choose arbitrary vertex as root
     
-    # Add all V to Priority Queue, and set predecessors to None
-    Q = HeapPriorityQueue()
-    for u in V:
-        u.setPredecessor(None)
-        if u == root: 
-            Q.add(0, root)
-        else:
-            Q.add(float('inf', u))
+#     # Add all V to Priority Queue, and set predecessors to None
+#     Q = HeapPriorityQueue()
+#     for u in V:
+#         u.setPredecessor(None)
+#         if u == root: 
+#             Q.add(0, root)
+#         else:
+#             Q.add(float('inf', u))
 
-    V_a = []    # set of vertices not in Q (Priority Queue not searchable?)
+#     V_a = []    # set of vertices not in Q (Priority Queue not searchable?)
 
-    while not Q.is_empty():
-        u_min, u = Q.remove_min()
-        V_a.append(u)
-        for v in G.getAdjacentVertices(u):
-            if v not in V_a and G.getEdge(u.getId(), v.getId()).getWeight() < 
+#     while not Q.is_empty():
+#         u_min, u = Q.remove_min()
+#         V_a.append(u)
+#         for v in G.getAdjacentVertices(u):
+#             if v not in V_a and G.getEdge(u.getId(), v.getId()).getWeight() < 
 
 
 
