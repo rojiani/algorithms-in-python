@@ -232,3 +232,14 @@ def DFS_timestamps_edges_2UD():
 # tsorted = topo_sort(g5)
 # for v in tsorted:
 #     print(v, end=',')    
+
+g = setup_DAG_2()
+DFS_edges(g)
+
+def f(x1, x2): 
+    return (x1 or x2) and (not x1 or x2) and (x1 or not x2) and (not x1 or not x2)
+
+print(f(False, False))
+
+def fn(n):
+    return 2**()
